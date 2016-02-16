@@ -141,6 +141,10 @@ let word5 = String(elName.[(elName.Length - 3)..(elName.Length - 2)])
 // ------------------------------------------------------------------
 
 // Use CsvProvider with the "data/titanic.csv" file as a sample
+type Titanic = CsvProvider<"data/titanic.csv">
+let titanic = Titanic.GetSample()
+let passenger = titanic.Rows |> Seq.find (fun r -> r.Age = 19. && r.Embarked = "Q")
+let word6 = passenger.Name.Substring(19, 3)
 
 // ------------------------------------------------------------------
 // WORD #7
