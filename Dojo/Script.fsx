@@ -35,6 +35,13 @@ type Sample = XmlProvider<"data/Writers.xml">
 // Load the sample document - explore properties using "doc."
 let doc = Sample.GetSample()
 
+open System
+type Bbc = XmlProvider<"data/bbc.xml">
+let bbc = Bbc.GetSample()
+let item = bbc.Channel.Items
+           |> Seq.find (fun i -> let d = i.PubDate.TimeOfDay in d.Hours = 9 &&  d.Minutes = 5)
+let word2 = item.Title.Split(' ') |> Seq.last
+
 // ------------------------------------------------------------------
 // WORD #3
 //
