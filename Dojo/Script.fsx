@@ -105,6 +105,11 @@ let lib = Lib.GetSample()
 
 // NOTE: The librarycalls.csv file uses ';' as the separator!
 
+type LibCalls = CsvProvider<"data/librarycalls.csv", Separators=";">
+let calls = LibCalls.GetSample()
+let row = calls.Rows |> Seq.find (fun r -> r.Params = 2 && r.Count = 1 && r.Name.Length > 6)
+let word4 = row.Name.Split('_') |> Seq.last |> sprintf "%ss"
+
 // ------------------------------------------------------------------
 // WORD #5
 //
