@@ -125,6 +125,11 @@ let word4 = row.Name.Split('_') |> Seq.last |> sprintf "%ss"
 // ------------------------------------------------------------------
 
 // Use HtmlProvider with "data/elements.html" file as a sample
+type Elements = HtmlProvider<"data/elements.html">
+let elements = Elements.Load("http://en.wikipedia.org/wiki/List_of_elements")
+let el = elements.Tables.List.Rows |> Seq.find (fun r -> r.Z = 36.)
+let elName = el.Element |> Seq.toArray
+let word5 = String(elName.[(elName.Length - 3)..(elName.Length - 2)])
 
 // ------------------------------------------------------------------
 // WORD #6
