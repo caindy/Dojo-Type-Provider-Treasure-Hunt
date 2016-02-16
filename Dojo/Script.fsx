@@ -18,6 +18,9 @@ wb.Countries.``Czech Republic``.Indicators.``Population, ages 0-14 (% of total)`
 // Get a list of countries in a specified region
 for c in wb.Regions.``Euro area``.Countries do
   printfn "%s" c.Name
+let na = wb.Regions.``North America``.Countries
+let minLife = na |> Seq.minBy (fun c -> c.Indicators.``Life expectancy at birth, total (years)``.[2000])
+let word1 = minLife.Code.Substring(0, 2)
 
 // ------------------------------------------------------------------
 // WORD #2
