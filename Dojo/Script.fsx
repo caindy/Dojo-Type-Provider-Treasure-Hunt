@@ -55,7 +55,7 @@ let word2 = item.Title.Split(' ') |> Seq.last
 // Using The MovieDB REST API
 // Make HTTP request to /3/search/person
 let key = "6ce0ef5b176501f8c07c634dfa933cff"
-let name = "craig"
+let name = "Haugerud"
 let data = 
   Http.RequestString
     ( "http://api.themoviedb.org/3/search/person",
@@ -66,9 +66,17 @@ let data =
 // (using sample result to generate types)
 type PersonSearch = JsonProvider<"data/personsearch.json">
 let sample = PersonSearch.Parse(data)
+let result = sample.Results |> Seq.head
 
-let first = sample.Results |> Seq.head
-first.Name
+let creditsJson =
+  Http.RequestString (
+    sprintf "http://api.themoviedb.org/3/person/%d/movie_credits" result.Id,
+    query = [ ("api_key", key) ],
+    headers = [ HttpRequestHeaders.Accept HttpContentTypes.Json ] )
+type MovieCredits = JsonProvider<"data/moviecredits.json">
+let credits = MovieCredits.Parse(creditsJson)
+let credit = credits.Crew |> Array.find (fun c -> c.Job = "Director" && c.ReleaseDate.Year = 2012)
+let word3 = credit.Title.Split(' ').[1]
 
 // Request URL: "http://api.themoviedb.org/3/person/<id>/movie_credits
 // (You can remove the 'query' parameter because it is not needed here;
