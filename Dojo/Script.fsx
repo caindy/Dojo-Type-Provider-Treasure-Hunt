@@ -154,5 +154,8 @@ let word6 = passenger.Name.Substring(19, 3)
 // 14th word from its description (split the description using ' '
 // as the separator and get item at index 13).
 // ------------------------------------------------------------------
-
+let d = bbc.Channel.Items |> Seq.find (fun i -> i.Title.Contains("Duran Duran"))
+let word7 = d.Description.Split(' ').[13]
 // (...)
+
+sprintf "%s %s %s %s %s %s %s" word2 word7 word4 word6 word3 word5 word1 
